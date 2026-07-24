@@ -36,19 +36,26 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 @keyframes shimmer{0%{background-position:-200%0}100%{background-position:200%0}}
 @keyframes glowPulse{0%,100%{box-shadow:0 0 20px var(--accent-glow)}50%{box-shadow:0 0 40px var(--accent-glow),0 0 60px rgba(88,101,242,.15)}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes borderGlow{0%,100%{border-color:var(--border-hover)}50%{border-color:rgba(88,101,242,.4)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* === NETWORK MESH BACKGROUND === */
+.network-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.network-corner{position:absolute;width:400px;height:400px;opacity:.08}
+.network-corner svg{width:100%;height:100%}
+.network-corner.top-left{top:-50px;left:-50px}
+.network-corner.bottom-right{bottom:-50px;right:-50px;transform:rotate(180deg)}
+/* === END NETWORK BACKGROUND === */
 
 .animate-on-scroll{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
 .animate-on-scroll.visible{opacity:1;transform:translateY(0)}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,11,16,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,11,16,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
 .brand{display:flex;align-items:center;gap:.75rem}
-.brand-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid rgba(88,101,242,.3);transition:all .3s}
+.brand-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid rgba(88,101,242,.3);transition:all .3s}
 .brand-avatar:hover{border-color:var(--accent);box-shadow:0 0 20px var(--accent-glow)}
-.brand-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem}
-.brand-tag{font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-left:.3rem}
+.brand-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:-.02em}
 .nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
 .nav-links a{color:var(--text-secondary);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .3s}
 .nav-links a:hover{color:var(--text-primary)}
@@ -57,29 +64,31 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,11,16,.9
 .mobile-menu-btn{display:none;background:none;border:none;color:var(--text-primary);font-size:1.5rem;cursor:pointer}
 
 /* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:7rem 1.5rem 4rem;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 50% 40% at 70% 30%,rgba(88,101,242,.06) 0%,transparent 50%),radial-gradient(ellipse 40% 30% at 20% 70%,rgba(168,85,247,.04) 0%,transparent 50%);pointer-events:none}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(88,101,242,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(88,101,242,.02) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 50% at 50% 40%,black 30%,transparent 70%);pointer-events:none}
-.hero-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:center;position:relative;z-index:2}
+.hero{width:100%;max-width:none;margin:0;min-height:100vh;display:flex;flex-direction:column;position:relative;padding:0;overflow:hidden}
+.hero-main{flex:1;display:flex;align-items:center;padding:6rem 1.5rem 2rem;position:relative;z-index:2}
+.hero-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:4rem;align-items:center;width:100%}
 
 .hero-left{animation:fadeInUp 1s ease-out}
 .hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;background:rgba(88,101,242,.1);border:1px solid rgba(88,101,242,.2);border-radius:100px;font-size:.8rem;font-weight:500;color:var(--accent-light);margin-bottom:1.5rem}
 .hero-badge .dot{width:8px;height:8px;background:var(--starter);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+
+/* === ORIGINAL HEADER STYLE WITH HEARTBEAT === */
 .hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:1rem}
-.hero h1 .gradient{background:var(--gradient);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s ease infinite}
+.hero h1 .gradient{display:inline;background:var(--gradient);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:heartbeatGradient 3s ease-in-out infinite}
+@keyframes heartbeatGradient{0%,100%{background-position:0% 50%;filter:brightness(1)}50%{background-position:100% 50%;filter:brightness(1.15)}}
+
 .hero-desc{font-size:1.05rem;color:var(--text-secondary);margin-bottom:2rem;max-width:520px;line-height:1.8}
 
-.hero-avatar-wrap{position:relative;width:280px;height:280px;margin:0 auto;animation:fadeIn 1.2s ease-out .3s both}
+.hero-avatar-wrap{position:relative;width:260px;height:260px;margin:0 auto;animation:fadeIn 1.2s ease-out .3s both}
 .hero-avatar-wrap::before{content:'';position:absolute;inset:-8px;border-radius:50%;background:var(--gradient);opacity:.15;filter:blur(20px);animation:glowPulse 3s ease-in-out infinite}
 .hero-avatar{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid rgba(88,101,242,.2);position:relative;z-index:2;transition:all .4s}
 .hero-avatar:hover{border-color:var(--accent);transform:scale(1.02)}
 .avatar-ring{position:absolute;inset:-12px;border-radius:50%;border:2px dashed rgba(88,101,242,.15);animation:spin 20s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
 
-.hero-stats{display:flex;gap:2rem;margin-bottom:2rem}
+.hero-stats{display:flex;gap:2.5rem;margin-bottom:2rem}
 .hero-stat{text-align:center}
-.hero-stat-num{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-stat-label{font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em}
+.hero-stat-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat-label{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
 
 .hero-cta-group{display:flex;gap:.75rem;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.75rem;border-radius:12px;font-size:.9rem;font-weight:600;text-decoration:none;cursor:pointer;transition:all .3s;border:none;font-family:inherit}
@@ -90,10 +99,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,11,16,.9
 .btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);color:white}
 .btn-whatsapp:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,211,102,.3)}
 
-/* SOCIAL BAR */
-.social-bar{background:var(--bg-elevated);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.5rem}
-.social-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:center;align-items:center;gap:2.5rem;flex-wrap:wrap}
-.social-link{display:flex;align-items:center;gap:.5rem;color:var(--text-muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .3s}
+/* SOCIAL BAR - FIXED AT BOTTOM OF HERO */
+.social-bar{position:relative;z-index:2;background:var(--bg-elevated);border-top:1px solid var(--border);padding:1.25rem 1.5rem}
+.social-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:center;align-items:center;gap:3rem;flex-wrap:wrap}
+.social-link{display:flex;align-items:center;gap:.6rem;color:var(--text-muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .3s}
 .social-link:hover{color:var(--text-primary);transform:translateY(-2px)}
 .social-link svg{width:20px;height:20px}
 
@@ -113,11 +122,11 @@ section{padding:5rem 1.5rem;max-width:1200px;margin:0 auto}
 .service-card.bot::before{background:linear-gradient(90deg,var(--bot),#22d3ee)}
 .service-card:hover{transform:translateY(-8px);border-color:var(--border-hover);box-shadow:0 25px 50px rgba(0,0,0,.4)}
 .service-card:hover::before{opacity:1}
-.service-icon-wrap{width:80px;height:80px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:1.5rem;position:relative}
+.service-icon-wrap{width:72px;height:72px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:1.5rem;position:relative}
 .service-card.discord .service-icon-wrap{background:rgba(88,101,242,.1);border:1px solid rgba(88,101,242,.2)}
 .service-card.video .service-icon-wrap{background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.2)}
 .service-card.bot .service-icon-wrap{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2)}
-.service-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:.75rem}
+.service-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:.75rem}
 .service-card.discord h3{color:var(--accent-light)}
 .service-card.video h3{color:#f472b6}
 .service-card.bot h3{color:#22d3ee}
@@ -137,9 +146,10 @@ section{padding:5rem 1.5rem;max-width:1200px;margin:0 auto}
 .service-card.bot .service-btn:hover{background:#0891b2;transform:translateY(-2px)}
 
 /* ABOUT */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-.about-img-wrap{position:relative}
-.about-img{width:100%;max-width:400px;border-radius:20px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.about-section{position:relative;padding:5rem 1.5rem;overflow:hidden}
+.about-grid{position:relative;z-index:2;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-img-wrap{position:relative;display:flex;justify-content:center}
+.about-img{width:100%;max-width:380px;border-radius:20px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.4)}
 .about-img-wrap::before{content:'';position:absolute;inset:-15px;border-radius:24px;border:1px dashed rgba(88,101,242,.15);z-index:-1}
 .about-content h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;margin-bottom:1rem}
 .about-content p{color:var(--text-secondary);font-size:1rem;line-height:1.8;margin-bottom:1rem}
@@ -148,28 +158,43 @@ section{padding:5rem 1.5rem;max-width:1200px;margin:0 auto}
 .about-tag:hover{border-color:var(--accent);color:var(--text-primary)}
 
 /* CTA SECTION */
-.cta-section{background:linear-gradient(135deg,rgba(88,101,242,.08),rgba(168,85,247,.05));border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 1.5rem;text-align:center}
-.cta-inner{max-width:700px;margin:0 auto}
+.cta-section{width:100%;max-width:none;margin:0;background:linear-gradient(135deg,rgba(88,101,242,.14),rgba(168,85,247,.1));border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 1.5rem;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(88,101,242,.15),transparent 60%);pointer-events:none}
+.cta-inner{max-width:700px;margin:0 auto;position:relative;z-index:2}
 .cta-section h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.75rem,4vw,2.5rem);font-weight:700;margin-bottom:1rem}
 .cta-section p{color:var(--text-secondary);font-size:1.1rem;margin-bottom:2rem;line-height:1.7}
 .cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 
+/* SCROLL TO TOP BUTTON */
+.scroll-top{position:fixed;bottom:2rem;right:2rem;width:48px;height:48px;border-radius:50%;background:var(--gradient);color:white;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 4px 20px var(--accent-glow);opacity:0;transform:translateY(20px);transition:all .4s;z-index:999;pointer-events:none}
+.scroll-top.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.scroll-top:hover{transform:translateY(-3px);box-shadow:0 8px 30px var(--accent-glow)}
+
 /* FOOTER */
-footer{padding:3rem 1.5rem;border-top:1px solid var(--border);text-align:center}
-.footer-brand{display:flex;align-items:center;justify-content:center;gap:.75rem;margin-bottom:1.5rem}
-.footer-avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(88,101,242,.3)}
-.footer-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem}
-.footer-social{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1.5rem}
-.footer-social a{color:var(--text-muted);text-decoration:none;transition:all .3s;display:flex;align-items:center;gap:.4rem;font-size:.85rem}
-.footer-social a:hover{color:var(--text-primary);transform:translateY(-2px)}
-.footer-social svg{width:18px;height:18px}
-.footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;flex-wrap:wrap}
-.footer-links a{color:var(--text-muted);text-decoration:none;font-size:.85rem;transition:color .3s}
+footer{padding:0;border-top:1px solid var(--border)}
+.footer-main{max-width:1100px;margin:0 auto;padding:4.5rem 1.5rem 3rem;display:flex;flex-direction:column;align-items:center;gap:3rem}
+.footer-connect{text-align:center}
+.footer-connect-label{font-family:'Space Grotesk',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-bottom:1.5rem}
+.footer-social{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.footer-social a{width:54px;height:54px;border-radius:16px;background:var(--bg-card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-secondary);text-decoration:none;transition:all .35s cubic-bezier(.2,.8,.3,1);position:relative}
+.footer-social svg{width:22px;height:22px;transition:transform .35s}
+.footer-social a:hover{transform:translateY(-6px) scale(1.06);color:#fff;border-color:transparent}
+.footer-social a:hover svg{transform:scale(1.1)}
+.footer-social a.ig:hover{background:linear-gradient(135deg,#f58529,#dd2a7b 45%,#8134af 70%,#515bd4);box-shadow:0 10px 28px rgba(221,42,123,.35)}
+.footer-social a.fb:hover{background:#1877f2;box-shadow:0 10px 28px rgba(24,119,242,.35)}
+.footer-social a.yt:hover{background:#ff0000;box-shadow:0 10px 28px rgba(255,0,0,.3)}
+.footer-social a.fv:hover{background:#1dbf73;box-shadow:0 10px 28px rgba(29,191,115,.3)}
+.footer-links{display:flex;justify-content:center;gap:2.25rem;flex-wrap:wrap}
+.footer-links a{color:var(--text-muted);text-decoration:none;font-size:.85rem;transition:color .3s;position:relative}
 .footer-links a:hover{color:var(--text-primary)}
-.footer-copy{color:var(--text-muted);font-size:.8rem}
+.footer-bottom{border-top:1px solid var(--border);background:var(--bg-elevated);padding:1.5rem;display:flex;align-items:center;justify-content:center;gap:.85rem;flex-wrap:wrap;text-align:center}
+.footer-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid rgba(88,101,242,.3)}
+.footer-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem}
+.footer-copy{color:var(--text-muted);font-size:.78rem}
+.footer-divider{width:1px;height:14px;background:var(--border)}
 
 /* STICKY CTA */
-.sticky-cta{position:fixed;bottom:0;left:0;right:0;background:rgba(10,11,16,.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:1rem 1.5rem;display:none;justify-content:center;gap:1rem;z-index:999;transform:translateY(100%);transition:transform .3s}
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;background:rgba(10,11,16,.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:1rem 1.5rem;display:none;justify-content:center;gap:1rem;z-index:998;transform:translateY(100%);transition:transform .3s}
 .sticky-cta.visible{display:flex;transform:translateY(0)}
 .sticky-cta-btn{padding:.75rem 1.5rem;border-radius:10px;font-size:.9rem;font-weight:600;text-decoration:none;transition:all .3s}
 .sticky-cta-primary{background:var(--gradient);color:white}
@@ -177,26 +202,30 @@ footer{padding:3rem 1.5rem;border-top:1px solid var(--border);text-align:center}
 
 /* RESPONSIVE */
 @media(max-width:900px){
-  .hero-content{grid-template-columns:1fr;text-align:center}
-  .hero-avatar-wrap{width:220px;height:220px}
+  .hero-content{grid-template-columns:1fr;text-align:center;padding-top:2rem}
+  .hero-avatar-wrap{width:200px;height:200px;margin-bottom:2rem}
   .hero-stats{justify-content:center}
   .hero-desc{margin:0 auto 2rem}
   .services-grid{grid-template-columns:1fr}
   .about-grid{grid-template-columns:1fr;text-align:center}
-  .about-img-wrap{display:flex;justify-content:center}
   .about-tags{justify-content:center}
-  .process-steps{grid-template-columns:1fr 1fr}
   .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:var(--bg-elevated);flex-direction:column;padding:1rem 2rem;border-bottom:1px solid var(--border);gap:1rem}
   .nav-links.active{display:flex}
   .mobile-menu-btn{display:block}
   .sticky-cta{display:flex}
+  .scroll-top{bottom:5rem;right:1rem}
+  .network-corner{width:250px;height:250px}
 }
 @media(max-width:600px){
+  .footer-divider{display:none}
   .hero h1{font-size:1.8rem}
+  .hero-main{padding:5rem 1rem 1.5rem}
   section{padding:3rem 1rem}
   .social-inner{gap:1.5rem}
   .hero-stats{gap:1.5rem}
-  .hero-stat-num{font-size:1.4rem}
+  .hero-stat-num{font-size:1.6rem}
+  .scroll-top{width:40px;height:40px;font-size:1rem}
+  .network-corner{width:180px;height:180px}
 }
 </style>
 </head>
@@ -206,10 +235,8 @@ footer{padding:3rem 1.5rem;border-top:1px solid var(--border);text-align:center}
 <nav>
 <div class="nav-inner">
 <div class="brand">
-<img src="assets/profile.png" alt="Yurri Studio" class="brand-avatar">
-<div>
+<img src="profile.png" alt="Yurri Studio" class="brand-avatar">
 <div class="brand-text">Yurri Studio</div>
-</div>
 </div>
 <ul class="nav-links" id="navLinks">
 <li><a href="#services">Services</a></li>
@@ -223,12 +250,84 @@ footer{padding:3rem 1.5rem;border-top:1px solid var(--border);text-align:center}
 
 <!-- HERO -->
 <section class="hero">
-<div class="hero-bg"></div>
-<div class="hero-grid"></div>
+<!-- Network Mesh Background -->
+<div class="network-bg">
+<div class="network-corner top-left">
+<svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="netGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" style="stop-color:#5865f2;stop-opacity:1" />
+<stop offset="50%" style="stop-color:#a855f7;stop-opacity:1" />
+<stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+</linearGradient>
+</defs>
+<circle cx="50" cy="50" r="3" fill="url(#netGrad1)" opacity="0.6"/>
+<circle cx="150" cy="80" r="3" fill="url(#netGrad1)" opacity="0.4"/>
+<circle cx="80" cy="180" r="3" fill="url(#netGrad1)" opacity="0.5"/>
+<circle cx="200" cy="120" r="3" fill="url(#netGrad1)" opacity="0.3"/>
+<circle cx="120" cy="250" r="3" fill="url(#netGrad1)" opacity="0.4"/>
+<circle cx="250" cy="200" r="3" fill="url(#netGrad1)" opacity="0.3"/>
+<circle cx="300" cy="100" r="3" fill="url(#netGrad1)" opacity="0.2"/>
+<circle cx="180" cy="300" r="3" fill="url(#netGrad1)" opacity="0.3"/>
+<circle cx="320" cy="280" r="3" fill="url(#netGrad1)" opacity="0.2"/>
+<circle cx="350" cy="150" r="3" fill="url(#netGrad1)" opacity="0.15"/>
+<line x1="50" y1="50" x2="150" y2="80" stroke="url(#netGrad1)" stroke-width="1" opacity="0.2"/>
+<line x1="50" y1="50" x2="80" y2="180" stroke="url(#netGrad1)" stroke-width="1" opacity="0.15"/>
+<line x1="150" y1="80" x2="200" y2="120" stroke="url(#netGrad1)" stroke-width="1" opacity="0.15"/>
+<line x1="80" y1="180" x2="120" y2="250" stroke="url(#netGrad1)" stroke-width="1" opacity="0.2"/>
+<line x1="150" y1="80" x2="120" y2="250" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+<line x1="200" y1="120" x2="250" y2="200" stroke="url(#netGrad1)" stroke-width="1" opacity="0.15"/>
+<line x1="120" y1="250" x2="180" y2="300" stroke="url(#netGrad1)" stroke-width="1" opacity="0.15"/>
+<line x1="250" y1="200" x2="300" y2="100" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+<line x1="200" y1="120" x2="300" y2="100" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+<line x1="300" y1="100" x2="350" y2="150" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+<line x1="250" y1="200" x2="320" y2="280" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+<line x1="180" y1="300" x2="320" y2="280" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+</svg>
+</div>
+<div class="network-corner bottom-right">
+<svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="netGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+<stop offset="50%" style="stop-color:#a855f7;stop-opacity:1" />
+<stop offset="100%" style="stop-color:#5865f2;stop-opacity:1" />
+</linearGradient>
+</defs>
+<circle cx="50" cy="50" r="3" fill="url(#netGrad2)" opacity="0.6"/>
+<circle cx="150" cy="80" r="3" fill="url(#netGrad2)" opacity="0.4"/>
+<circle cx="80" cy="180" r="3" fill="url(#netGrad2)" opacity="0.5"/>
+<circle cx="200" cy="120" r="3" fill="url(#netGrad2)" opacity="0.3"/>
+<circle cx="120" cy="250" r="3" fill="url(#netGrad2)" opacity="0.4"/>
+<circle cx="250" cy="200" r="3" fill="url(#netGrad2)" opacity="0.3"/>
+<circle cx="300" cy="100" r="3" fill="url(#netGrad2)" opacity="0.2"/>
+<circle cx="180" cy="300" r="3" fill="url(#netGrad2)" opacity="0.3"/>
+<circle cx="320" cy="280" r="3" fill="url(#netGrad2)" opacity="0.2"/>
+<circle cx="350" cy="150" r="3" fill="url(#netGrad2)" opacity="0.15"/>
+<line x1="50" y1="50" x2="150" y2="80" stroke="url(#netGrad2)" stroke-width="1" opacity="0.2"/>
+<line x1="50" y1="50" x2="80" y2="180" stroke="url(#netGrad2)" stroke-width="1" opacity="0.15"/>
+<line x1="150" y1="80" x2="200" y2="120" stroke="url(#netGrad2)" stroke-width="1" opacity="0.15"/>
+<line x1="80" y1="180" x2="120" y2="250" stroke="url(#netGrad2)" stroke-width="1" opacity="0.2"/>
+<line x1="150" y1="80" x2="120" y2="250" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+<line x1="200" y1="120" x2="250" y2="200" stroke="url(#netGrad2)" stroke-width="1" opacity="0.15"/>
+<line x1="120" y1="250" x2="180" y2="300" stroke="url(#netGrad2)" stroke-width="1" opacity="0.15"/>
+<line x1="250" y1="200" x2="300" y2="100" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+<line x1="200" y1="120" x2="300" y2="100" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+<line x1="300" y1="100" x2="350" y2="150" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+<line x1="250" y1="200" x2="320" y2="280" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+<line x1="180" y1="300" x2="320" y2="280" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+</svg>
+</div>
+</div>
+
+<div class="hero-main">
 <div class="hero-content">
 <div class="hero-left">
 <div class="hero-badge"><span class="dot"></span>Available for Projects</div>
-<h1>Building Digital Experiences That <span class="gradient">Convert & Captivate</span></h1>
+
+<!-- Original header style with heartbeat gradient -->
+<h1>Building Digital<br>Experiences That <span class="gradient">Convert & Captivate</span></h1>
+
 <p class="hero-desc">I'm a freelance digital creator helping brands, streamers, and communities level up. From professional Discord servers to cinematic video edits and AI-powered automation — I turn your vision into reality.</p>
 
 <div class="hero-stats">
@@ -254,12 +353,12 @@ footer{padding:3rem 1.5rem;border-top:1px solid var(--border);text-align:center}
 
 <div class="hero-avatar-wrap">
 <div class="avatar-ring"></div>
-<img src="assets/profile.png" alt="Yurri Studio Founder" class="hero-avatar">
+<img src="profile.png" alt="Yurri Studio Founder" class="hero-avatar">
 </div>
 </div>
-</section>
+</div>
 
-<!-- SOCIAL BAR -->
+<!-- Social Bar - Fixed at bottom of hero -->
 <div class="social-bar">
 <div class="social-inner">
 <a href="https://www.instagram.com/yurristudio/" target="_blank" class="social-link">
@@ -280,6 +379,7 @@ Fiverr
 </a>
 </div>
 </div>
+</section>
 
 <!-- SERVICES -->
 <section id="services">
@@ -338,10 +438,10 @@ Fiverr
 </section>
 
 <!-- ABOUT -->
-<section id="about">
+<section class="about-section" id="about">
 <div class="about-grid">
 <div class="about-img-wrap animate-on-scroll">
-<img src="assets/profile.png" alt="Yurri Studio Founder" class="about-img">
+<img src="profile.png" alt="Yurri Studio Founder" class="about-img">
 </div>
 <div class="about-content animate-on-scroll">
 <div class="section-tag" style="display:inline-block;margin-bottom:1rem;">About Me</div>
@@ -374,27 +474,23 @@ Fiverr
 
 <!-- FOOTER -->
 <footer>
-<div class="footer-brand">
-<img src="assets/profile.png" alt="Yurri Studio" class="footer-avatar">
-<div class="footer-name">Yurri Studio</div>
-</div>
+<div class="footer-main">
+<div class="footer-connect">
+<div class="footer-connect-label">Let's Connect</div>
 <div class="footer-social">
-<a href="https://www.instagram.com/yurristudio/" target="_blank">
+<a href="https://www.instagram.com/yurristudio/" target="_blank" class="ig" aria-label="Instagram">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-Instagram
 </a>
-<a href="https://www.facebook.com/Yurristudio" target="_blank">
+<a href="https://www.facebook.com/Yurristudio" target="_blank" class="fb" aria-label="Facebook">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-Facebook
 </a>
-<a href="https://www.youtube.com/@yurristudio" target="_blank">
+<a href="https://www.youtube.com/@yurristudio" target="_blank" class="yt" aria-label="YouTube">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.53C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
-YouTube
 </a>
-<a href="https://www.fiverr.com/themhprotech" target="_blank">
+<a href="https://www.fiverr.com/themhprotech" target="_blank" class="fv" aria-label="Fiverr">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-Fiverr
 </a>
+</div>
 </div>
 <div class="footer-links">
 <a href="#services">Services</a>
@@ -404,7 +500,13 @@ Fiverr
 <a href="video/">Video</a>
 <a href="bot-automation/">Bot & AI</a>
 </div>
-<p class="footer-copy">Yurri Studio — Digital Solutions for Creators & Communities. All rights reserved.</p>
+</div>
+<div class="footer-bottom">
+<img src="profile.png" alt="Yurri Studio" class="footer-avatar">
+<span class="footer-name">Yurri Studio</span>
+<span class="footer-divider"></span>
+<span class="footer-copy">Digital Solutions for Creators & Communities. All rights reserved.</span>
+</div>
 </footer>
 
 <!-- STICKY CTA -->
@@ -413,15 +515,24 @@ Fiverr
 <a href="https://wa.me/213550859474" target="_blank" class="sticky-cta-btn sticky-cta-secondary">&#128172; WhatsApp</a>
 </div>
 
+<!-- SCROLL TO TOP BUTTON -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+&#8593;
+</button>
+
 <script>
 function toggleMenu(){document.getElementById('navLinks').classList.toggle('active')}
 
 const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});
 document.querySelectorAll('.animate-on-scroll').forEach(el=>observer.observe(el));
 
+// Scroll to top button visibility
+const scrollTopBtn=document.getElementById('scrollTop');
 let lastScroll=0;
 window.addEventListener('scroll',()=>{
   const st=window.pageYOffset;
+  if(st>400){scrollTopBtn.classList.add('visible')}
+  else{scrollTopBtn.classList.remove('visible')}
   const sticky=document.getElementById('stickyCta');
   if(st>600&&st>lastScroll){sticky.classList.add('visible')}
   else if(st<lastScroll||st<300){sticky.classList.remove('visible')}
