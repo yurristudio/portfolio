@@ -100,7 +100,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,11,16,.8
 .btn-whatsapp:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,211,102,.3)}
 
 /* SOCIAL BAR - FIXED AT BOTTOM OF HERO */
-.social-bar{position:relative;z-index:2;background:var(--bg-elevated);border-top:1px solid var(--border);padding:2rem 1.5rem}
+.social-bar{position:relative;z-index:2;background:var(--bg-elevated);border-top:1px solid var(--border);width:100%;padding:2rem 1.5rem}
 .social-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:center;align-items:center;gap:3rem;flex-wrap:wrap}
 .social-link{display:flex;align-items:center;gap:.6rem;color:var(--text-muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .3s}
 .social-link:hover{color:var(--text-primary);transform:translateY(-2px)}
@@ -203,7 +203,7 @@ footer{padding:0;border-top:1px solid var(--border)}
 /* RESPONSIVE */
 @media(max-width:900px){
   .hero-content{grid-template-columns:1fr;text-align:center;padding-top:2rem}
-  .hero-avatar-wrap{width:200px;height:200px;margin-bottom:2rem}
+  .hero-avatar-wrap{display:none}
   .hero-stats{justify-content:center}
   .hero-desc{margin:0 auto 2rem}
   .services-grid{grid-template-columns:1fr}
@@ -218,7 +218,6 @@ footer{padding:0;border-top:1px solid var(--border)}
 }
 @media(max-width:600px){
   .footer-divider{display:none}
-  .hero-avatar-wrap{display:none}
   .hero h1{font-size:1.8rem}
   .hero-main{padding:5rem 1rem 1.5rem}
   section{padding:3rem 1rem}
