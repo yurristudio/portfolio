@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yurri Studio — Digital Solutions for Creators & Communities</title>
+<meta name="description" content="Yurri Studio delivers professional Discord servers, video editing, and AI automation. Freelance digital services by a creator, for creators.">
+<meta name="keywords" content="Yurri Studio, Discord server setup, video editing, AI automation, bot development, freelance digital services">
+<meta property="og:title" content="Yurri Studio — Digital Solutions for Creators">
+<meta property="og:description" content="Discord servers, video editing & AI automation. Built by a creator, for creators.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b10;--bg-elevated:#0f111a;--bg-card:#13141c;--bg-card-hover:#1a1c28;
+  --border:#1e2030;--border-hover:#2a2d42;--text-primary:#f0f0f5;--text-secondary:#9ca3af;--text-muted:#6b7280;
+  --accent:#5865f2;--accent-light:#7b83f7;--accent-glow:rgba(88,101,242,.25);
+  --starter:#22c55e;--starter-bg:rgba(34,197,94,.08);--starter-border:rgba(34,197,94,.2);
+  --pro:#a855f7;--pro-bg:rgba(168,85,247,.08);--pro-border:rgba(168,85,247,.2);
+  --elite:#f59e0b;--elite-bg:rgba(245,158,11,.08);--elite-border:rgba(245,158,11,.2);
+  --video:#ec4899;--video-bg:rgba(236,72,153,.08);--video-border:rgba(236,72,153,.2);
+  --bot:#06b6d4;--bot-bg:rgba(6,182,212,.08);--bot-border:rgba(6,182,212,.2);
+  --gradient:linear-gradient(135deg,#5865f2,#7b83f7,#a855f7);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:4px}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(1.05)}}
+@keyframes shimmer{0%{background-position:-200%0}100%{background-position:200%0}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 20px var(--accent-glow)}50%{box-shadow:0 0 40px var(--accent-glow),0 0 60px rgba(88,101,242,.15)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* === NETWORK MESH BACKGROUND === */
+.network-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.network-corner{position:absolute;width:400px;height:400px;opacity:.08}
+.network-corner svg{width:100%;height:100%}
+.network-corner.top-left{top:-50px;left:-50px}
+.network-corner.bottom-right{bottom:-50px;right:-50px;transform:rotate(180deg)}
+/* === END NETWORK BACKGROUND === */
+
+.animate-on-scroll{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.animate-on-scroll.visible{opacity:1;transform:translateY(0)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,11,16,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:.75rem}
+.brand-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid rgba(88,101,242,.3);transition:all .3s}
+.brand-avatar:hover{border-color:var(--accent);box-shadow:0 0 20px var(--accent-glow)}
+.brand-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:-.02em}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{color:var(--text-secondary);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .3s}
+.nav-links a:hover{color:var(--text-primary)}
+.nav-cta{padding:.5rem 1.25rem;background:var(--gradient);color:white;border-radius:8px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .3s}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 15px var(--accent-glow)}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--text-primary);font-size:1.5rem;cursor:pointer}
+
+/* HERO */
+.hero{width:100%;max-width:none;margin:0;min-height:100vh;display:flex;flex-direction:column;position:relative;padding:0;overflow:hidden}
+.hero-main{flex:1;display:flex;align-items:center;padding:6rem 1.5rem 2rem;position:relative;z-index:2}
+.hero-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:4rem;align-items:center;width:100%}
+
+.hero-left{animation:fadeInUp 1s ease-out}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;background:rgba(88,101,242,.1);border:1px solid rgba(88,101,242,.2);border-radius:100px;font-size:.8rem;font-weight:500;color:var(--accent-light);margin-bottom:1.5rem}
+.hero-badge .dot{width:8px;height:8px;background:var(--starter);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+
+/* === ORIGINAL HEADER STYLE WITH HEARTBEAT === */
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:1rem}
+.hero h1 .gradient{display:inline;background:var(--gradient);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:heartbeatGradient 3s ease-in-out infinite}
+@keyframes heartbeatGradient{0%,100%{background-position:0% 50%;filter:brightness(1)}50%{background-position:100% 50%;filter:brightness(1.15)}}
+
+.hero-desc{font-size:1.05rem;color:var(--text-secondary);margin-bottom:2rem;max-width:520px;line-height:1.8}
+
+.hero-avatar-wrap{position:relative;width:260px;height:260px;margin:0 auto;animation:fadeIn 1.2s ease-out .3s both}
+.hero-avatar-wrap::before{content:'';position:absolute;inset:-8px;border-radius:50%;background:var(--gradient);opacity:.15;filter:blur(20px);animation:glowPulse 3s ease-in-out infinite}
+.hero-avatar{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid rgba(88,101,242,.2);position:relative;z-index:2;transition:all .4s}
+.hero-avatar:hover{border-color:var(--accent);transform:scale(1.02)}
+.avatar-ring{position:absolute;inset:-12px;border-radius:50%;border:2px dashed rgba(88,101,242,.15);animation:spin 20s linear infinite}
+
+.hero-stats{display:flex;gap:2.5rem;margin-bottom:2rem}
+.hero-stat{text-align:center}
+.hero-stat-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat-label{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
+
+.hero-cta-group{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.75rem;border-radius:12px;font-size:.9rem;font-weight:600;text-decoration:none;cursor:pointer;transition:all .3s;border:none;font-family:inherit}
+.btn-primary{background:var(--gradient);color:white;box-shadow:0 4px 20px var(--accent-glow);animation:glowPulse 3s ease-in-out infinite}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-glow)}
+.btn-secondary{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--accent);background:var(--bg-card-hover)}
+.btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);color:white}
+.btn-whatsapp:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,211,102,.3)}
+
+/* SOCIAL BAR - FIXED AT BOTTOM OF HERO */
+.social-bar{position:relative;z-index:2;background:var(--bg-elevated);border-top:1px solid var(--border);padding:2rem 1.5rem}
+.social-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:center;align-items:center;gap:3rem;flex-wrap:wrap}
+.social-link{display:flex;align-items:center;gap:.6rem;color:var(--text-muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .3s}
+.social-link:hover{color:var(--text-primary);transform:translateY(-2px)}
+.social-link svg{width:20px;height:20px}
+
+/* SECTIONS */
+section{padding:5rem 1.5rem;max-width:1200px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:3.5rem}
+.section-tag{display:inline-block;padding:.3rem .85rem;background:rgba(88,101,242,.1);border:1px solid rgba(88,101,242,.2);border-radius:100px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-light);margin-bottom:1rem}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.75rem,4vw,2.5rem);font-weight:700;letter-spacing:-.02em;margin-bottom:.75rem}
+.section-desc{color:var(--text-secondary);max-width:600px;margin:0 auto;font-size:1rem;line-height:1.7}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.service-card{background:var(--bg-card);border:1px solid var(--border);border-radius:24px;padding:2.5rem 2rem;text-align:center;transition:all .5s;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity .3s}
+.service-card.discord::before{background:linear-gradient(90deg,var(--accent),var(--accent-light))}
+.service-card.video::before{background:linear-gradient(90deg,var(--video),#f472b6)}
+.service-card.bot::before{background:linear-gradient(90deg,var(--bot),#22d3ee)}
+.service-card:hover{transform:translateY(-8px);border-color:var(--border-hover);box-shadow:0 25px 50px rgba(0,0,0,.4)}
+.service-card:hover::before{opacity:1}
+.service-icon-wrap{width:72px;height:72px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:1.5rem;position:relative}
+.service-card.discord .service-icon-wrap{background:rgba(88,101,242,.1);border:1px solid rgba(88,101,242,.2)}
+.service-card.video .service-icon-wrap{background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.2)}
+.service-card.bot .service-icon-wrap{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2)}
+.service-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:.75rem}
+.service-card.discord h3{color:var(--accent-light)}
+.service-card.video h3{color:#f472b6}
+.service-card.bot h3{color:#22d3ee}
+.service-card>p{color:var(--text-secondary);font-size:.9rem;margin-bottom:1.5rem;line-height:1.7;flex:1}
+.service-features{list-style:none;text-align:left;width:100%;margin-bottom:1.5rem}
+.service-features li{display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--text-secondary);margin-bottom:.5rem}
+.service-features li::before{content:'✓';font-weight:700;flex-shrink:0}
+.service-card.discord .service-features li::before{color:var(--accent-light)}
+.service-card.video .service-features li::before{color:#f472b6}
+.service-card.bot .service-features li::before{color:#22d3ee}
+.service-btn{display:block;width:100%;padding:.875rem;border-radius:12px;font-size:.9rem;font-weight:700;text-decoration:none;text-align:center;transition:all .3s;border:none;cursor:pointer;font-family:inherit}
+.service-card.discord .service-btn{background:var(--accent);color:white}
+.service-card.discord .service-btn:hover{background:#4752c4;transform:translateY(-2px)}
+.service-card.video .service-btn{background:var(--video);color:white}
+.service-card.video .service-btn:hover{background:#db2777;transform:translateY(-2px)}
+.service-card.bot .service-btn{background:var(--bot);color:white}
+.service-card.bot .service-btn:hover{background:#0891b2;transform:translateY(-2px)}
+
+/* ABOUT */
+.about-section{position:relative;padding:5rem 1.5rem;overflow:hidden}
+.about-grid{position:relative;z-index:2;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-img-wrap{position:relative;display:flex;justify-content:center}
+.about-img{width:100%;max-width:380px;border-radius:20px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.about-img-wrap::before{content:'';position:absolute;inset:-15px;border-radius:24px;border:1px dashed rgba(88,101,242,.15);z-index:-1}
+.about-content h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;margin-bottom:1rem}
+.about-content p{color:var(--text-secondary);font-size:1rem;line-height:1.8;margin-bottom:1rem}
+.about-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.5rem}
+.about-tag{padding:.35rem .8rem;background:var(--bg-elevated);border:1px solid var(--border);border-radius:100px;font-size:.8rem;color:var(--text-secondary);transition:all .3s}
+.about-tag:hover{border-color:var(--accent);color:var(--text-primary)}
+
+/* CTA SECTION */
+.cta-section{width:100%;max-width:none;margin:0;background:linear-gradient(135deg,rgba(88,101,242,.14),rgba(168,85,247,.1));border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 1.5rem;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(88,101,242,.15),transparent 60%);pointer-events:none}
+.cta-inner{max-width:700px;margin:0 auto;position:relative;z-index:2}
+.cta-section h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.75rem,4vw,2.5rem);font-weight:700;margin-bottom:1rem}
+.cta-section p{color:var(--text-secondary);font-size:1.1rem;margin-bottom:2rem;line-height:1.7}
+.cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* SCROLL TO TOP BUTTON */
+.scroll-top{position:fixed;bottom:2rem;right:2rem;width:48px;height:48px;border-radius:50%;background:var(--gradient);color:white;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 4px 20px var(--accent-glow);opacity:0;transform:translateY(20px);transition:all .4s;z-index:999;pointer-events:none}
+.scroll-top.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.scroll-top:hover{transform:translateY(-3px);box-shadow:0 8px 30px var(--accent-glow)}
+
+/* FOOTER */
+footer{padding:0;border-top:1px solid var(--border)}
+.footer-main{max-width:1100px;margin:0 auto;padding:4.5rem 1.5rem 3rem;display:flex;flex-direction:column;align-items:center;gap:3rem}
+.footer-connect{text-align:center}
+.footer-connect-label{font-family:'Space Grotesk',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-bottom:1.5rem}
+.footer-social{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.footer-social a{width:54px;height:54px;border-radius:16px;background:var(--bg-card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-secondary);text-decoration:none;transition:all .35s cubic-bezier(.2,.8,.3,1);position:relative}
+.footer-social svg{width:22px;height:22px;transition:transform .35s}
+.footer-social a:hover{transform:translateY(-6px) scale(1.06);color:#fff;border-color:transparent}
+.footer-social a:hover svg{transform:scale(1.1)}
+.footer-social a.ig:hover{background:linear-gradient(135deg,#f58529,#dd2a7b 45%,#8134af 70%,#515bd4);box-shadow:0 10px 28px rgba(221,42,123,.35)}
+.footer-social a.fb:hover{background:#1877f2;box-shadow:0 10px 28px rgba(24,119,242,.35)}
+.footer-social a.yt:hover{background:#ff0000;box-shadow:0 10px 28px rgba(255,0,0,.3)}
+.footer-social a.fv:hover{background:#1dbf73;box-shadow:0 10px 28px rgba(29,191,115,.3)}
+.footer-links{display:flex;justify-content:center;gap:2.25rem;flex-wrap:wrap}
+.footer-links a{color:var(--text-muted);text-decoration:none;font-size:.85rem;transition:color .3s;position:relative}
+.footer-links a:hover{color:var(--text-primary)}
+.footer-bottom{border-top:1px solid var(--border);background:var(--bg-elevated);padding:1.5rem;display:flex;align-items:center;justify-content:center;gap:.85rem;flex-wrap:wrap;text-align:center}
+.footer-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid rgba(88,101,242,.3)}
+.footer-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem}
+.footer-copy{color:var(--text-muted);font-size:.78rem}
+.footer-divider{width:1px;height:14px;background:var(--border)}
+
+/* STICKY CTA */
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;background:rgba(10,11,16,.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:1rem 1.5rem;display:none;justify-content:center;gap:1rem;z-index:998;transform:translateY(100%);transition:transform .3s}
+.sticky-cta.visible{display:flex;transform:translateY(0)}
+.sticky-cta-btn{padding:.75rem 1.5rem;border-radius:10px;font-size:.9rem;font-weight:600;text-decoration:none;transition:all .3s}
+.sticky-cta-primary{background:var(--gradient);color:white}
+.sticky-cta-secondary{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;text-align:center;padding-top:2rem}
+  .hero-avatar-wrap{width:200px;height:200px;margin-bottom:2rem}
+  .hero-stats{justify-content:center}
+  .hero-desc{margin:0 auto 2rem}
+  .services-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr;text-align:center}
+  .about-tags{justify-content:center}
+  .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:var(--bg-elevated);flex-direction:column;padding:1rem 2rem;border-bottom:1px solid var(--border);gap:1rem}
+  .nav-links.active{display:flex}
+  .mobile-menu-btn{display:block}
+  .sticky-cta{display:flex}
+  .scroll-top{bottom:5rem;right:1rem}
+  .network-corner{width:250px;height:250px}
+}
+@media(max-width:600px){
+  .footer-divider{display:none}
+  .hero-avatar-wrap{display:none}
+  .hero-cta-group{width:100%;flex-wrap:nowrap;gap:.6rem}
+  .hero-cta-group .btn{flex:1 1 0;min-width:0;padding:.8rem .5rem;font-size:.78rem;justify-content:center;text-align:center;line-height:1.3}
+  .cta-buttons{width:100%;flex-wrap:nowrap;gap:.6rem}
+  .cta-buttons .btn{flex:1 1 0;min-width:0;padding:.8rem .5rem;font-size:.78rem;justify-content:center;text-align:center;line-height:1.3}
+  .hero h1{font-size:1.8rem}
+  .hero-main{padding:5rem 1rem 1.5rem}
+  section{padding:3rem 1rem}
+  .social-inner{gap:1.5rem}
+  .hero-stats{gap:1.5rem}
+  .hero-stat-num{font-size:1.6rem}
+  .scroll-top{width:40px;height:40px;font-size:1rem}
+  .network-corner{width:180px;height:180px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+<div class="nav-inner">
+<div class="brand">
+<img src="assets/profile.png" alt="Yurri Studio" class="brand-avatar">
+<div class="brand-text">Yurri Studio</div>
+</div>
+<ul class="nav-links" id="navLinks">
+<li><a href="#services">Services</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#contact">Contact</a></li>
+<li><a href="https://www.fiverr.com/themhprotech" target="_blank" class="nav-cta">Hire on Fiverr</a></li>
+</ul>
+<button class="mobile-menu-btn" onclick="toggleMenu()">&#9776;</button>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+<!-- Network Mesh Background -->
+<div class="network-bg">
+<div class="network-corner top-left">
+<svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="netGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" style="stop-color:#5865f2;stop-opacity:1" />
+<stop offset="50%" style="stop-color:#a855f7;stop-opacity:1" />
+<stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+</linearGradient>
+</defs>
+<circle cx="50" cy="50" r="3" fill="url(#netGrad1)" opacity="0.6"/>
+<circle cx="150" cy="80" r="3" fill="url(#netGrad1)" opacity="0.4"/>
+<circle cx="80" cy="180" r="3" fill="url(#netGrad1)" opacity="0.5"/>
+<circle cx="200" cy="120" r="3" fill="url(#netGrad1)" opacity="0.3"/>
+<circle cx="120" cy="250" r="3" fill="url(#netGrad1)" opacity="0.4"/>
+<circle cx="250" cy="200" r="3" fill="url(#netGrad1)" opacity="0.3"/>
+<circle cx="300" cy="100" r="3" fill="url(#netGrad1)" opacity="0.2"/>
+<circle cx="180" cy="300" r="3" fill="url(#netGrad1)" opacity="0.3"/>
+<circle cx="320" cy="280" r="3" fill="url(#netGrad1)" opacity="0.2"/>
+<circle cx="350" cy="150" r="3" fill="url(#netGrad1)" opacity="0.15"/>
+<line x1="50" y1="50" x2="150" y2="80" stroke="url(#netGrad1)" stroke-width="1" opacity="0.2"/>
+<line x1="50" y1="50" x2="80" y2="180" stroke="url(#netGrad1)" stroke-width="1" opacity="0.15"/>
+<line x1="150" y1="80" x2="200" y2="120" stroke="url(#netGrad1)" stroke-width="1" opacity="0.15"/>
+<line x1="80" y1="180" x2="120" y2="250" stroke="url(#netGrad1)" stroke-width="1" opacity="0.2"/>
+<line x1="150" y1="80" x2="120" y2="250" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+<line x1="200" y1="120" x2="250" y2="200" stroke="url(#netGrad1)" stroke-width="1" opacity="0.15"/>
+<line x1="120" y1="250" x2="180" y2="300" stroke="url(#netGrad1)" stroke-width="1" opacity="0.15"/>
+<line x1="250" y1="200" x2="300" y2="100" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+<line x1="200" y1="120" x2="300" y2="100" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+<line x1="300" y1="100" x2="350" y2="150" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+<line x1="250" y1="200" x2="320" y2="280" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+<line x1="180" y1="300" x2="320" y2="280" stroke="url(#netGrad1)" stroke-width="1" opacity="0.1"/>
+</svg>
+</div>
+<div class="network-corner bottom-right">
+<svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="netGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+<stop offset="50%" style="stop-color:#a855f7;stop-opacity:1" />
+<stop offset="100%" style="stop-color:#5865f2;stop-opacity:1" />
+</linearGradient>
+</defs>
+<circle cx="50" cy="50" r="3" fill="url(#netGrad2)" opacity="0.6"/>
+<circle cx="150" cy="80" r="3" fill="url(#netGrad2)" opacity="0.4"/>
+<circle cx="80" cy="180" r="3" fill="url(#netGrad2)" opacity="0.5"/>
+<circle cx="200" cy="120" r="3" fill="url(#netGrad2)" opacity="0.3"/>
+<circle cx="120" cy="250" r="3" fill="url(#netGrad2)" opacity="0.4"/>
+<circle cx="250" cy="200" r="3" fill="url(#netGrad2)" opacity="0.3"/>
+<circle cx="300" cy="100" r="3" fill="url(#netGrad2)" opacity="0.2"/>
+<circle cx="180" cy="300" r="3" fill="url(#netGrad2)" opacity="0.3"/>
+<circle cx="320" cy="280" r="3" fill="url(#netGrad2)" opacity="0.2"/>
+<circle cx="350" cy="150" r="3" fill="url(#netGrad2)" opacity="0.15"/>
+<line x1="50" y1="50" x2="150" y2="80" stroke="url(#netGrad2)" stroke-width="1" opacity="0.2"/>
+<line x1="50" y1="50" x2="80" y2="180" stroke="url(#netGrad2)" stroke-width="1" opacity="0.15"/>
+<line x1="150" y1="80" x2="200" y2="120" stroke="url(#netGrad2)" stroke-width="1" opacity="0.15"/>
+<line x1="80" y1="180" x2="120" y2="250" stroke="url(#netGrad2)" stroke-width="1" opacity="0.2"/>
+<line x1="150" y1="80" x2="120" y2="250" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+<line x1="200" y1="120" x2="250" y2="200" stroke="url(#netGrad2)" stroke-width="1" opacity="0.15"/>
+<line x1="120" y1="250" x2="180" y2="300" stroke="url(#netGrad2)" stroke-width="1" opacity="0.15"/>
+<line x1="250" y1="200" x2="300" y2="100" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+<line x1="200" y1="120" x2="300" y2="100" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+<line x1="300" y1="100" x2="350" y2="150" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+<line x1="250" y1="200" x2="320" y2="280" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+<line x1="180" y1="300" x2="320" y2="280" stroke="url(#netGrad2)" stroke-width="1" opacity="0.1"/>
+</svg>
+</div>
+</div>
+
+<div class="hero-main">
+<div class="hero-content">
+<div class="hero-left">
+<div class="hero-badge"><span class="dot"></span>Available for Projects</div>
+
+<!-- Original header style with heartbeat gradient -->
+<h1>Building Digital<br>Experiences That <span class="gradient">Convert & Captivate</span></h1>
+
+<p class="hero-desc">I'm a freelance digital creator helping brands, streamers, and communities level up. From professional Discord servers to cinematic video edits and AI-powered automation — I turn your vision into reality.</p>
+
+<div class="hero-stats">
+<div class="hero-stat">
+<div class="hero-stat-num">100+</div>
+<div class="hero-stat-label">Projects Done</div>
+</div>
+<div class="hero-stat">
+<div class="hero-stat-num">50+</div>
+<div class="hero-stat-label">Happy Clients</div>
+</div>
+<div class="hero-stat">
+<div class="hero-stat-num">24h</div>
+<div class="hero-stat-label">Fast Delivery</div>
+</div>
+</div>
+
+<div class="hero-cta-group">
+<a href="https://www.fiverr.com/themhprotech" target="_blank" class="btn btn-primary">&#128640; Hire Me on Fiverr</a>
+<a href="https://wa.me/213550859474" target="_blank" class="btn btn-whatsapp">&#128172; Chat on WhatsApp</a>
+</div>
+</div>
+
+<div class="hero-avatar-wrap">
+<div class="avatar-ring"></div>
+<img src="assets/profile.png" alt="Yurri Studio Founder" class="hero-avatar">
+</div>
+</div>
+</div>
+
+<!-- Social Bar - Fixed at bottom of hero -->
+<div class="social-bar">
+<div class="social-inner">
+<a href="https://www.instagram.com/yurristudio/" target="_blank" class="social-link">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+Instagram
+</a>
+<a href="https://www.facebook.com/Yurristudio" target="_blank" class="social-link">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+Facebook
+</a>
+<a href="https://www.youtube.com/@yurristudio" target="_blank" class="social-link">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.53C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+YouTube
+</a>
+<a href="https://www.fiverr.com/themhprotech" target="_blank" class="social-link">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+Fiverr
+</a>
+</div>
+</div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+<div class="section-header animate-on-scroll">
+<div class="section-tag">What I Do</div>
+<h2 class="section-title">Three Ways I Can Help You</h2>
+<p class="section-desc">Every service is built with the same obsession: making you look professional, saving you time, and growing your brand.</p>
+</div>
+<div class="services-grid">
+
+<!-- Discord Card -->
+<div class="service-card discord animate-on-scroll">
+<div class="service-icon-wrap">&#128172;</div>
+<h3>Discord Community Suite</h3>
+<p>Complete server architecture, custom bots, roles, channels, automation & branding. Everything you need to launch a thriving community.</p>
+<ul class="service-features">
+<li>Custom server design & layout</li>
+<li>Bot configuration & moderation</li>
+<li>Role hierarchies & permissions</li>
+<li>Welcome flows & verification</li>
+<li>Visual branding & banners</li>
+</ul>
+<a href="discord/" class="service-btn">Explore Discord Services &#8594;</a>
+</div>
+
+<!-- Video Card -->
+<div class="service-card video animate-on-scroll">
+<div class="service-icon-wrap">&#127909;</div>
+<h3>Video Production</h3>
+<p>Professional video editing, motion graphics, reels, promos, and content optimized for YouTube, Instagram, TikTok, and ads.</p>
+<ul class="service-features">
+<li>Video editing & color grading</li>
+<li>Motion graphics & animations</li>
+<li>Social media reels & shorts</li>
+<li>YouTube intros & outros</li>
+<li>Ad creatives & promos</li>
+</ul>
+<a href="video/" class="service-btn">Explore Video Services &#8594;</a>
+</div>
+
+<!-- Bot Card -->
+<div class="service-card bot animate-on-scroll">
+<div class="service-icon-wrap">&#129302;</div>
+<h3>Bot Dev & AI Automation</h3>
+<p>Custom Discord bots, workflow automation with n8n, AI integrations, and smart systems that run your community while you sleep.</p>
+<ul class="service-features">
+<li>Custom Discord bot development</li>
+<li>AI-powered chat & moderation</li>
+<li>n8n workflow automation</li>
+<li>CRM & database integrations</li>
+<li>API connections & webhooks</li>
+</ul>
+<a href="bot-automation/" class="service-btn">Explore Bot & AI Services &#8594;</a>
+</div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+<div class="about-grid">
+<div class="about-img-wrap animate-on-scroll">
+<img src="assets/profile.png" alt="Yurri Studio Founder" class="about-img">
+</div>
+<div class="about-content animate-on-scroll">
+<div class="section-tag" style="display:inline-block;margin-bottom:1rem;">About Me</div>
+<h2>Creator. Builder. Problem Solver.</h2>
+<p>I'm the person behind Yurri Studio — a freelance digital creator obsessed with building things that work beautifully. Whether it's a Discord server that converts visitors into active community members, a video edit that stops the scroll, or a bot that handles your workflow while you focus on creating.</p>
+<p>Every project starts with understanding your goal, then delivering something that exceeds it. Fast turnaround, unlimited revisions, and a genuine commitment to your success.</p>
+<div class="about-tags">
+<span class="about-tag">Discord Expert</span>
+<span class="about-tag">Video Editor</span>
+<span class="about-tag">Bot Developer</span>
+<span class="about-tag">AI Automation</span>
+<span class="about-tag">n8n Specialist</span>
+<span class="about-tag">Community Builder</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+<div class="cta-inner animate-on-scroll">
+<h2>Let's Build Something Great Together</h2>
+<p>Have a project in mind? Whether it's a Discord server, a video edit, or an automation workflow — I'm ready to bring it to life. Fast delivery, fair pricing, and results that speak.</p>
+<div class="cta-buttons">
+<a href="https://www.fiverr.com/themhprotech" target="_blank" class="btn btn-primary">&#128640; Order on Fiverr</a>
+<a href="https://wa.me/213550859474" target="_blank" class="btn btn-whatsapp">&#128172; Chat on WhatsApp</a>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-main">
+<div class="footer-connect">
+<div class="footer-connect-label">Let's Connect</div>
+<div class="footer-social">
+<a href="https://www.instagram.com/yurristudio/" target="_blank" class="ig" aria-label="Instagram">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+</a>
+<a href="https://www.facebook.com/Yurristudio" target="_blank" class="fb" aria-label="Facebook">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+</a>
+<a href="https://www.youtube.com/@yurristudio" target="_blank" class="yt" aria-label="YouTube">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.53C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+</a>
+<a href="https://www.fiverr.com/themhprotech" target="_blank" class="fv" aria-label="Fiverr">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+</a>
+</div>
+</div>
+<div class="footer-links">
+<a href="#services">Services</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+<a href="discord/">Discord</a>
+<a href="video/">Video</a>
+<a href="bot-automation/">Bot & AI</a>
+</div>
+</div>
+<div class="footer-bottom">
+<img src="assets/profile.png" alt="Yurri Studio" class="footer-avatar">
+<span class="footer-name">Yurri Studio</span>
+<span class="footer-divider"></span>
+<span class="footer-copy">Digital Solutions for Creators & Communities. All rights reserved.</span>
+</div>
+</footer>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta" id="stickyCta">
+<a href="https://www.fiverr.com/themhprotech" target="_blank" class="sticky-cta-btn sticky-cta-primary">&#128640; Hire on Fiverr</a>
+<a href="https://wa.me/213550859474" target="_blank" class="sticky-cta-btn sticky-cta-secondary">&#128172; WhatsApp</a>
+</div>
+
+<!-- SCROLL TO TOP BUTTON -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+&#8593;
+</button>
+
+<script>
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('active')}
+
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});
+document.querySelectorAll('.animate-on-scroll').forEach(el=>observer.observe(el));
+
+// Scroll to top button visibility
+const scrollTopBtn=document.getElementById('scrollTop');
+let lastScroll=0;
+window.addEventListener('scroll',()=>{
+  const st=window.pageYOffset;
+  if(st>400){scrollTopBtn.classList.add('visible')}
+  else{scrollTopBtn.classList.remove('visible')}
+  const sticky=document.getElementById('stickyCta');
+  if(st>600&&st>lastScroll){sticky.classList.add('visible')}
+  else if(st<lastScroll||st<300){sticky.classList.remove('visible')}
+  lastScroll=st;
+});
+</script>
+
+</body>
+</html>
